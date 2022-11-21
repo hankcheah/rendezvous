@@ -38,6 +38,8 @@ import (
 	"sync"
 )
 
+
+
 type rendezvous struct {
 	Hasher hash.Hash32 // 32-bit hash generator that implements hash.Hash32 interface
 	// Bring your own 32-bit hasher implementation if you want to
@@ -97,6 +99,12 @@ func (r *rendezvous) Len() int {
 
 // Resolve returns the node that has the highest score
 func (r *rendezvous) Resolve(request string) string {
+    if len(r.nodes) == 0 {
+        // Good time to panic because it indicates logic error on the developer's part
+        // Convert this code to return an error if it's normal to have zero active servers
+        panic("No server available")
+    }
+
 	node := ""
 	var maxScore float64 = 0.0
 
