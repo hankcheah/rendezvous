@@ -8,7 +8,11 @@ Rendezvous Hashing is originally known as Highest Random Weight (HRW) hashing.
 This example shows how to add and remove nodes, as well as how to determine which node is handling a request using resolve().
 
 ```
-  r := New()
+  import (
+    "github.com/hankcheah/rendezvous"
+  )
+
+  r := rendezvous.New()
 
   // Add nodes in bulk
   r.AddWeightedNodes(map[string]int{
@@ -35,9 +39,12 @@ This example shows how to add and remove nodes, as well as how to determine whic
 Currently the package only supports 32-bit hash functions and the hasher has to satisfy the hash.Hash32 interface (See https://pkg.go.dev/hash).
 
 ```
-  import "crc32"
+  import (
+    "crc32"
+    "github.com/hankcheah/rendezvous"
+  )
 
-  r.New()
+  r := rendezvous.New()
   r.Hasher = crc32.NewIEEE()  // crc32.NewIEEE is a concrete type of hash.Hash32
   
   r.AddNode("node1.test.com")
